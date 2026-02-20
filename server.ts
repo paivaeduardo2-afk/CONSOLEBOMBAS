@@ -15,6 +15,9 @@ async function startServer() {
 
   // Logging middleware
   app.use((req, res, next) => {
+    if (req.url === '/favicon.ico') {
+      return res.status(204).end();
+    }
     console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
     next();
   });

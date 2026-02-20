@@ -61,7 +61,7 @@ const STATUS_LABELS: Record<NozzleStatus, string> = {
 export default function App() {
   const [nozzles, setNozzles] = useState<Nozzle[]>([]);
   const [selectedNozzle, setSelectedNozzle] = useState<Nozzle | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [showConnModal, setShowConnModal] = useState(true);
   const [connSettings, setConnSettings] = useState({
