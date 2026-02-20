@@ -85,11 +85,12 @@ async function startServer() {
   });
 
   // Vite middleware for development
+  const root = process.cwd();
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",
-      root: process.cwd(),
+      root: root,
     });
     app.use(vite.middlewares);
     
@@ -97,8 +98,8 @@ async function startServer() {
     app.get("*", async (req, res, next) => {
       const url = req.originalUrl;
       try {
-        // 1. Read index.html
-        let template = await fs.readFile(path.resolve(process.cwd(), "index.html"), "utf-8");
+        // 1. Read index.html from root
+        let template = await fs.readFile(path.resolve(root, "index.html"), "utf-8");
         // 2. Apply Vite HTML transforms
         template = await vite.transformIndexHtml(url, template);
         // 3. Send the rendered HTML
@@ -109,9 +110,10 @@ async function startServer() {
       }
     });
   } else {
-    app.use(express.static(path.join(__dirname, "dist")));
+    const distPath = path.join(root, "dist");
+    app.use(express.static(distPath));
     app.get("*", (req, res) => {
-      res.sendFile(path.join(__dirname, "dist", "index.html"));
+      res.sendFile(path.join(distPath, "index.html"));
     });
   }
 
