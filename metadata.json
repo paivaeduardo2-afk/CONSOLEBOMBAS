@@ -1,0 +1,5 @@
+{
+  "name": "Companytec Fuel Controller",
+  "description": "System for monitoring and controlling fuel pumps using Horustech/Companytec protocols.",
+  "requestFramePermissions": []
+}
